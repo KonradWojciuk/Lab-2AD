@@ -11,21 +11,39 @@
     <a class="btn btn-primary" asp-action="New">New Book</a>
 </p>
 
-<table class="table table-bordered table-hover">
+<table id="books" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Book</th>
-            <th colspan="2">Genre</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Release Date</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var book in Model)
         {
             <tr>
-                <td><a asp-action="Edit" asp-route-id="@book.Id">@Html.DisplayFor(modelItem => book.Title)</a></td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
                 <td>@book.Genre.Name</td>
-                <td><a asp-action="Details" asp-route-id="@book.Id">Details</a></td>
+                <td>@(book.ReleaseDate.HasValue ? book.ReleaseDate.Value.ToShortDateString() : "")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Books", new { id = book.Id })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Books", new { id = book.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Books", new { id = book.Id })" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#books').DataTable();
+        });
+    </script>
+}

@@ -77,7 +77,7 @@ namespace LibApp.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", "Customers");
+            return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int id)
